@@ -4,9 +4,11 @@ import
     BsListCheck, BsMenuButtonWideFill, BsFillGearFill}
     from 'react-icons/bs'
 import { PiButterflyFill } from "react-icons/pi";
+import { IoLocationOutline } from "react-icons/io5";
 import { MdDevices } from "react-icons/md";
 
 import './Sidebar.css';
+import {NavLink} from "react-router-dom";
 
 const Sidebar = ({openSidebarToggle, OpenSidebar}) =>{
     return (
@@ -20,14 +22,14 @@ const Sidebar = ({openSidebarToggle, OpenSidebar}) =>{
 
             <ul className='sidebar-list'>
                 <li className='sidebar-list-item'>
-                    <a href="">
+                    <NavLink to="/">
                         <MdDevices className='icon'/> Device
-                    </a>
+                    </NavLink>
                 </li>
                 <li className='sidebar-list-item'>
-                    <a href="">
-                        <BsFillArchiveFill className='icon'/> Products
-                    </a>
+                    <NavLink to="/location">
+                        <IoLocationOutline className='icon'/> Location
+                    </NavLink>
                 </li>
                 <li className='sidebar-list-item'>
                     <a href="">
