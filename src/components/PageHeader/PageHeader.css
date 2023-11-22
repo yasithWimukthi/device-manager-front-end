@@ -1,0 +1,13 @@
+.page-header {
+    background-color: #263043;
+    height: 100px;
+    display: flex;
+}
+.page-header-icon {
+    align-self: center;
+    width: 100px;
+    height: 50px;
+}
+.page-header-title {
+    align-self: center;
+}
