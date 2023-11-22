@@ -1,8 +1,11 @@
 import React from 'react'
 import
-{BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill,
+{ BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill,
     BsListCheck, BsMenuButtonWideFill, BsFillGearFill}
     from 'react-icons/bs'
+import { PiButterflyFill } from "react-icons/pi";
+import { MdDevices } from "react-icons/md";
+
 import './Sidebar.css';
 
 const Sidebar = ({openSidebarToggle, OpenSidebar}) =>{
@@ -10,7 +13,7 @@ const Sidebar = ({openSidebarToggle, OpenSidebar}) =>{
         <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""}>
             <div className='sidebar-title'>
                 <div className='sidebar-brand'>
-                    <BsCart3  className='icon_header'/> SHOP
+                    <PiButterflyFill  className='icon_header'/> Layout Index
                 </div>
                 <span className='icon close_icon' onClick={OpenSidebar}>X</span>
             </div>
@@ -18,7 +21,7 @@ const Sidebar = ({openSidebarToggle, OpenSidebar}) =>{
             <ul className='sidebar-list'>
                 <li className='sidebar-list-item'>
                     <a href="">
-                        <BsGrid1X2Fill className='icon'/> Dashboard
+                        <MdDevices className='icon'/> Device
                     </a>
                 </li>
                 <li className='sidebar-list-item'>
