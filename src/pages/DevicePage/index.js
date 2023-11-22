@@ -8,10 +8,10 @@ import './index.css';
 
 const validationSchema = Yup.object({
     number: Yup.number().required('Please enter a valid number.'),
-    type: Yup.string().required('Required.'),
-    image: Yup.mixed().required('Required'),
-    dateCreated: Yup.date().required('Required.'),
-    status: Yup.string().required('Required.'),
+    type: Yup.string().required('Please select a type.'),
+    image: Yup.mixed().required('Please upload an image.'),
+    dateCreated: Yup.date().required('Please select a date.'),
+    status: Yup.string().required('Please choose status.'),
 });
 
 
@@ -70,30 +70,8 @@ const DevicePage = () => {
                         </Select>
                     </FormControl>
 
-                    <label htmlFor="image">
-                        <Button variant="outlined" component="span">
-                            Upload Image
-                        </Button>
-                    </label>
+                    <p className="image-error">{formik.errors.type ? formik.errors.type : null}</p>
 
-                    {formik.errors.image ? formik.errors.image : null}
-
-                    <Input
-                        fullWidth
-                        type="file"
-                        id="image"
-                        name="image"
-                        onChange={handleImageChange}
-                        error={formik.touched.image && Boolean(formik.errors.image)}
-                        inputProps={{ accept: 'image/*' }}
-                        margin="normal"
-                    />
-
-                    {formik.values.image && (
-                        <Box mt={2}>
-                            <img src={URL.createObjectURL(formik.values.image)} alt="Selected" style={{ maxWidth: '100%', maxHeight: '200px' }} />
-                        </Box>
-                    )}
                     <TextField
                         fullWidth
                         id="dateCreated"
@@ -123,9 +101,35 @@ const DevicePage = () => {
                         </Select>
                     </FormControl>
 
-                    <Box mt={2} direction="column"
-                         justifyContent="center"
-                         alignItems="flex-end">
+                    <p className="image-error">{formik.errors.status ? formik.errors.status : null}</p>
+
+                    <label htmlFor="image" style={{marginTop:'15px'}}>
+                        <Button variant="outlined" component="span">
+                            Upload Image
+                        </Button>
+                    </label>
+
+                    <p className="image-error">{formik.errors.image ? formik.errors.image : null}</p>
+
+                    <Input
+                        fullWidth
+                        type="file"
+                        id="image"
+                        name="image"
+                        onChange={handleImageChange}
+                        error={formik.touched.image && Boolean(formik.errors.image)}
+                        inputProps={{ accept: 'image/*' }}
+                        margin="normal"
+                        style={{display: 'none'}}
+                    />
+
+                    {formik.values.image && (
+                        <Box mt={2}>
+                            <img src={URL.createObjectURL(formik.values.image)} alt="Selected" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                        </Box>
+                    )}
+
+                    <Box mt={2} style={{textAlign:'end'}}>
                         <Button variant="contained" type="submit" endIcon={<SendIcon/>}>
                             Submit
                         </Button>
