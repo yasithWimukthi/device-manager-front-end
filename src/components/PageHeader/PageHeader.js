@@ -1,5 +1,6 @@
 import React from 'react';
 import { TbDeviceIpadHorizontalPlus } from "react-icons/tb";
+import { IoLocationSharp } from "react-icons/io5";
 import './PageHeader.css';
 const PageHeader = ({title}) => {
 
@@ -7,8 +8,9 @@ const PageHeader = ({title}) => {
         switch (title) {
             case 'Add Device':
                 return <TbDeviceIpadHorizontalPlus className="page-header-icon"/>
-            case 'Edit Device':
-                return <i className="fas fa-edit"></i>
+            case 'Location':
+                return <IoLocationSharp className="page-header-icon"/>
+
             default:
                 return <i className="fas fa-plus-circle"></i>
         }
