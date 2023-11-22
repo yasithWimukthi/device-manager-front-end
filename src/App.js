@@ -4,6 +4,7 @@ import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
 import './App.css';
 import DevicePage from "./pages/DevicePage";
+import LocationPage from "./pages/LocationPage";
 
 function App() {
     const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
@@ -13,11 +14,12 @@ function App() {
 
     return (
         <div className='grid-container'>
-            <Header OpenSidebar={OpenSidebar}/>
-            <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
             <Router>
+                <Header OpenSidebar={OpenSidebar}/>
+                <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
                 <Routes>
                     <Route path="/" element={<DevicePage />} />
+                    <Route path="/location" element={<LocationPage />} />
                 </Routes>
             </Router>
         </div>
