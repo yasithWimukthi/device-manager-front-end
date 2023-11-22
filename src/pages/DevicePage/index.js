@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import {TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Input} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import PageHeader from "../../components/PageHeader/PageHeader";
+import axios from '../../services/axiosConfig';
 import './index.css';
 
 const validationSchema = Yup.object({
@@ -13,7 +14,6 @@ const validationSchema = Yup.object({
     dateCreated: Yup.date().required('Please select a date.'),
     status: Yup.string().required('Please choose status.'),
 });
-
 
 const DevicePage = () => {
     const formik = useFormik({
@@ -28,8 +28,21 @@ const DevicePage = () => {
         onSubmit: (values) => {
             // Handle form submission here
             console.log(values);
-            // reset initialValues
-            formik.resetForm();
+            const formData = new FormData();
+            formData.append('number', values.number);
+            formData.append('type', values.type);
+            formData.append('image', values.image);
+            formData.append('date_created', values.dateCreated);
+            formData.append('status', values.status);
+
+            axios.post('/devices', formData)
+                .then(response => {
+                    console.log(response);
+                    formik.resetForm();
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
     });
 
@@ -103,8 +116,8 @@ const DevicePage = () => {
 
                     <p className="image-error">{formik.errors.status ? formik.errors.status : null}</p>
 
-                    <label htmlFor="image" style={{marginTop:'15px'}}>
-                        <Button variant="outlined" component="span">
+                    <label htmlFor="image">
+                        <Button variant="outlined" component="span" style={{marginTop: '15px'}}>
                             Upload Image
                         </Button>
                     </label>
@@ -118,18 +131,19 @@ const DevicePage = () => {
                         name="image"
                         onChange={handleImageChange}
                         error={formik.touched.image && Boolean(formik.errors.image)}
-                        inputProps={{ accept: 'image/*' }}
+                        inputProps={{accept: 'image/*'}}
                         margin="normal"
                         style={{display: 'none'}}
                     />
 
                     {formik.values.image && (
                         <Box mt={2}>
-                            <img src={URL.createObjectURL(formik.values.image)} alt="Selected" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                            <img src={URL.createObjectURL(formik.values.image)} alt="Selected"
+                                 style={{maxWidth: '100%', maxHeight: '200px'}}/>
                         </Box>
                     )}
 
-                    <Box mt={2} style={{textAlign:'end'}}>
+                    <Box mt={2} style={{textAlign: 'end'}}>
                         <Button variant="contained" type="submit" endIcon={<SendIcon/>}>
                             Submit
                         </Button>
