@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 import
 {BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify}
-    from 'react-icons/bs'
+    from 'react-icons/bs';
+import './Header.css';
 
 const Header = ({OpenSidebar}) => {
     return (
@@ -21,4 +22,4 @@ const Header = ({OpenSidebar}) => {
     )
 }
 
-export default Header
+export default Header;
