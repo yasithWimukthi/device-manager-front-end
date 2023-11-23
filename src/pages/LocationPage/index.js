@@ -5,9 +5,12 @@ import {Button} from "@mui/material";
 import Swal from 'sweetalert2'
 import axios from '../../services/axiosConfig'
 import LocationTable from "./LocationTable";
+import DeviceForm from "./DeviceForm";
 
 const LocationPage = () => {
     const [isLocationFormOpen, setIsLocationFormOpen] = useState(false);
+    const [isLocationDeviceOpen, setIsDeviceFormOpen] = useState(false);
+    const [selectedLocation, setSelectedLocation] = useState(null); // [1
     const [devices, setDevices] = useState([]);
     const [locations, setLocations] = useState([]);
 
@@ -19,6 +22,14 @@ const LocationPage = () => {
         setIsLocationFormOpen(false);
     };
 
+    const handleDeviceFormOpen = (locationId) => {
+        setIsDeviceFormOpen(true);
+        setSelectedLocation(locationId);
+    };
+
+    const handleDeviceFormClose = () => {
+        setIsDeviceFormOpen(false);
+    };
     const handleLocationFormSubmit = (values) => {
         // Handle form submission logic here
         console.log('Location form submitted with values:', values);
@@ -61,9 +72,17 @@ const LocationPage = () => {
             });
     },[]);
 
-    const handleAddDevice = (locationId) => {
-        // Implement your logic to add a device for the specified location
-        // Update the state accordingly
+    const handleAddDevice = (value) => {
+        console.log('Device form submitted with values:', value);
+        console.log('Selected location:', selectedLocation);
+
+        axios.post('/locations/add-devices', {devices:value.devices, location_id: selectedLocation})
+            .then(response => {
+                setLocations(response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     const handleRemoveDevice = (deviceId) => {
@@ -105,8 +124,15 @@ const LocationPage = () => {
                     locations={locations}
                     onAddDevice={handleAddDevice}
                     onRemoveDevice={handleRemoveDevice}
+                    handleDeviceFormOpen={handleDeviceFormOpen}
                 />
             </div>
+            <DeviceForm
+                open={isLocationDeviceOpen}
+                devices={devices}
+                onClose={handleDeviceFormClose}
+                onSubmit={handleAddDevice}
+            />
         </div>
     )
 }

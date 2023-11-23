@@ -14,7 +14,7 @@ import {
 import Chip from '@mui/material/Chip';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const LocationTable = ({ locations, onAddDevice, onRemoveDevice }) => {
+const LocationTable = ({ locations, onAddDevice, onRemoveDevice, handleDeviceFormOpen }) => {
     return (
         <TableContainer component={Paper}>
             <Table>
@@ -46,7 +46,7 @@ const LocationTable = ({ locations, onAddDevice, onRemoveDevice }) => {
                                 >
                                     <DeleteIcon />
                                 </IconButton>
-                                <Button variant="outlined" onClick={() => onAddDevice(location.id)}>
+                                <Button variant="outlined" onClick={() => handleDeviceFormOpen(location.id)}>
                                     Add Device
                                 </Button>
                             </TableCell>
