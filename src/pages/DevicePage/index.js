@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import {TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Input} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import PageHeader from "../../components/PageHeader/PageHeader";
+import Swal from 'sweetalert2';
 import axios from '../../services/axiosConfig';
 import './index.css';
 
@@ -37,11 +38,21 @@ const DevicePage = () => {
 
             axios.post('/devices', formData)
                 .then(response => {
-                    console.log(response);
                     formik.resetForm();
+                    Swal.fire({
+                        icon: "success",
+                        title: "Device added successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 })
                 .catch(error => {
                     console.log(error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong!",
+                    });
                 });
         },
     });
