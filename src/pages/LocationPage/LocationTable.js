@@ -35,12 +35,12 @@ const LocationTable = ({ locations, onAddDevice, onRemoveDevice }) => {
                             <TableCell>{location.ip_address}</TableCell>
                             <TableCell>
                                     {location.devices && location.devices.length > 0 && location.devices.map((device) => (
-                                        <Chip key={device.number} label={device.number} onDelete={() => onRemoveDevice (device.id)} />
+                                        <Chip key={device.id} label={device.number} onDelete={() => onRemoveDevice (device.id)} />
                                     ))}
                             </TableCell>
                             <TableCell>
                                 <IconButton
-                                    onClick={() => onRemoveDevice(location.id)}
+                                    onClick={() => console.log(location.id)}
                                     color="primary"
                                     aria-label="remove location"
                                 >
