@@ -99,7 +99,7 @@ const LocationForm = ({ open, devices, onClose, onSubmit }) => {
                             )}
                         >
                             {devices.map((device) => (
-                                <MenuItem key={device.number} value={device.number}>
+                                <MenuItem key={device.number} value={device.id}>
                                     {device.number}
                                 </MenuItem>
                             ))}

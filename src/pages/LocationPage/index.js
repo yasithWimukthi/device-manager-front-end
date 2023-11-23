@@ -19,6 +19,21 @@ const LocationPage = () => {
     const handleLocationFormSubmit = (values) => {
         // Handle form submission logic here
         console.log('Location form submitted with values:', values);
+
+        const locationData = {
+            serial_number: values.serialNumber,
+            name: values.name,
+            ip_address: values.ipAddress,
+            devices: values.devices,
+        }
+
+        axios.post('/locations', locationData)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     useEffect(() => {
