@@ -24,7 +24,7 @@ const DeviceForm = ({open, devices, onClose, onSubmit}) => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            onSubmit(values);
+            onSubmit(values,formik);
             onClose();
         },
     });

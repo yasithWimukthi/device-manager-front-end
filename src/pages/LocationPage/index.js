@@ -2,10 +2,12 @@ import React, {useEffect, useState} from "react";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import LocationForm from "./LocationForm";
 import {Button} from "@mui/material";
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import axios from '../../services/axiosConfig'
 import LocationTable from "./LocationTable";
 import DeviceForm from "./DeviceForm";
+import AddIcon from '@mui/icons-material/Add';
+
 
 const LocationPage = () => {
     const [isLocationFormOpen, setIsLocationFormOpen] = useState(false);
@@ -32,8 +34,6 @@ const LocationPage = () => {
     };
     const handleLocationFormSubmit = (values) => {
         // Handle form submission logic here
-        console.log('Location form submitted with values:', values);
-
         const locationData = {
             serial_number: values.serialNumber,
             name: values.name,
@@ -43,10 +43,21 @@ const LocationPage = () => {
 
         axios.post('/locations', locationData)
             .then(response => {
-                console.log(response);
+                setLocations(response.data.data);
+                Swal.fire({
+                    icon: "success",
+                    title: "Location added successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             })
             .catch(error => {
                 console.log(error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
             });
     };
 
@@ -54,7 +65,6 @@ const LocationPage = () => {
         // fetch all devices here
         axios.get('/devices')
             .then(response => {
-                console.log(response);
                 setDevices(response.data.data);
             })
             .catch(error => {
@@ -64,7 +74,6 @@ const LocationPage = () => {
         // fetch all locations here
         axios.get('/locations')
             .then(response => {
-                console.log(response);
                 setLocations(response.data.data);
             })
             .catch(error => {
@@ -72,16 +81,25 @@ const LocationPage = () => {
             });
     },[]);
 
-    const handleAddDevice = (value) => {
-        console.log('Device form submitted with values:', value);
-        console.log('Selected location:', selectedLocation);
-
+    const handleAddDevice = (value,formik) => {
         axios.post('/locations/add-devices', {devices:value.devices, location_id: selectedLocation})
             .then(response => {
+                formik.resetForm();
                 setLocations(response.data.data);
+                    Swal.fire({
+                        icon: "success",
+                        title: "Device added successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
             })
             .catch(error => {
                 console.log(error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
             });
     };
 
@@ -110,9 +128,11 @@ const LocationPage = () => {
     return (
         <div>
             <PageHeader title="Location"/>
-            <Button variant="contained" color="primary" onClick={handleLocationFormOpen}>
-                Open Location Form
-            </Button>
+            <div style={{display:"flex",justifyContent:'flex-end',margin:'30px'}}>
+                <Button variant="contained" color="primary" onClick={handleLocationFormOpen} endIcon={<AddIcon/>}>
+                    Open Location Form
+                </Button>
+            </div>
             <LocationForm
                 open={isLocationFormOpen}
                 devices={devices}
