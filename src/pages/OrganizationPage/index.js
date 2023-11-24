@@ -31,21 +31,12 @@ const OrganizationPage = () => {
         setIsDeviceFormOpen(false);
     };
     const handleOrganizationFormSubmit = (values) => {
-        // Handle form submission logic here
-        // console.log(values);
-        // const locationData = {
-        //     serial_number: values.serialNumber,
-        //     name: values.name,
-        //     ip_address: values.ipAddress,
-        //     devices: values.devices,
-        // }
-
         axios.post('/organizations', values)
             .then(response => {
-                setLocations(response.data.data);
+                // setLocations(response.data.data);
                 Swal.fire({
                     icon: "success",
-                    title: "Location added successfully",
+                    title: "Organization added successfully",
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -62,17 +53,18 @@ const OrganizationPage = () => {
 
     useEffect(() => {
         // fetch all devices here
-        axios.get('/devices')
-            .then(response => {
-                setDevices(response.data.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        // axios.get('/devices')
+        //     .then(response => {
+        //         setDevices(response.data.data);
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
 
         // fetch all locations here
-        axios.get('/locations')
+        axios.get('/organizations')
             .then(response => {
+                console.log(response.data.data);
                 setLocations(response.data.data);
             })
             .catch(error => {
