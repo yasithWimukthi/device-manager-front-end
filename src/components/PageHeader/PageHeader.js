@@ -1,6 +1,7 @@
 import React from 'react';
 import { TbDeviceIpadHorizontalPlus } from "react-icons/tb";
 import { IoLocationSharp } from "react-icons/io5";
+import { FaBuilding } from "react-icons/fa6";
 import './PageHeader.css';
 const PageHeader = ({title}) => {
 
@@ -10,9 +11,10 @@ const PageHeader = ({title}) => {
                 return <TbDeviceIpadHorizontalPlus className="page-header-icon"/>
             case 'Location':
                 return <IoLocationSharp className="page-header-icon"/>
-
+            case 'Organization':
+                return <FaBuilding className="page-header-icon"/>
             default:
-                return <i className="fas fa-plus-circle"></i>
+                return <FaBuilding className="page-header-icon"/>
         }
     }
 
