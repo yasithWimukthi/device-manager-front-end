@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import axios from '../../services/axiosConfig'
 import AddIcon from '@mui/icons-material/Add';
 import OrganizationForm from "./OrganizationForm";
+import OrganizationTable from "./OrganizationTable";
 
 
 const OrganizationPage = () => {
@@ -12,7 +13,7 @@ const OrganizationPage = () => {
     const [isLocationDeviceOpen, setIsDeviceFormOpen] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState(null); // [1
     const [devices, setDevices] = useState([]);
-    const [locations, setLocations] = useState([]);
+    const [organizations, setOrganizations] = useState([]);
 
     const handleOrganizationFormOpen = () => {
         setIsOrganizationFormOpen(true);
@@ -31,21 +32,12 @@ const OrganizationPage = () => {
         setIsDeviceFormOpen(false);
     };
     const handleOrganizationFormSubmit = (values) => {
-        // Handle form submission logic here
-        // console.log(values);
-        // const locationData = {
-        //     serial_number: values.serialNumber,
-        //     name: values.name,
-        //     ip_address: values.ipAddress,
-        //     devices: values.devices,
-        // }
-
         axios.post('/organizations', values)
             .then(response => {
-                setLocations(response.data.data);
+                // setLocations(response.data.data);
                 Swal.fire({
                     icon: "success",
-                    title: "Location added successfully",
+                    title: "Organization added successfully",
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -61,19 +53,11 @@ const OrganizationPage = () => {
     };
 
     useEffect(() => {
-        // fetch all devices here
-        axios.get('/devices')
+        // fetch all organizations here
+        axios.get('/organizations')
             .then(response => {
-                setDevices(response.data.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-        // fetch all locations here
-        axios.get('/locations')
-            .then(response => {
-                setLocations(response.data.data);
+                console.log(response.data.data);
+                setOrganizations(response.data.data);
             })
             .catch(error => {
                 console.log(error);
@@ -84,7 +68,7 @@ const OrganizationPage = () => {
         axios.post('/locations/add-devices', {devices:value.devices, location_id: selectedLocation})
             .then(response => {
                 formik.resetForm();
-                setLocations(response.data.data);
+                setOrganizations(response.data.data);
                 Swal.fire({
                     icon: "success",
                     title: "Device added successfully",
@@ -113,7 +97,7 @@ const OrganizationPage = () => {
             if (result.isConfirmed) {
                 axios.post('/devices/detach', {device_id: deviceId})
                     .then(response => {
-                        setLocations(response.data.data);
+                        setOrganizations(response.data.data);
                     })
                     .catch(error => {
                         console.log(error);
@@ -134,18 +118,18 @@ const OrganizationPage = () => {
             </div>
             <OrganizationForm
                 open={isOrganizationFormOpen}
-                locations={locations}
+                locations={organizations}
                 onClose={handleOrganizationFormClose}
                 onSubmit={handleOrganizationFormSubmit}
             />
-            {/*<div>*/}
-            {/*    <LocationTable*/}
-            {/*        locations={locations}*/}
-            {/*        onAddDevice={handleAddDevice}*/}
-            {/*        onRemoveDevice={handleRemoveDevice}*/}
-            {/*        handleDeviceFormOpen={handleDeviceFormOpen}*/}
-            {/*    />*/}
-            {/*</div>*/}
+            <div>
+                <OrganizationTable
+                    organizations={organizations}
+                    onAddDevice={handleAddDevice}
+                    onRemoveDevice={handleRemoveDevice}
+                    handleDeviceFormOpen={handleDeviceFormOpen}
+                />
+            </div>
             {/*<DeviceForm*/}
             {/*    open={isLocationDeviceOpen}*/}
             {/*    devices={devices}*/}
