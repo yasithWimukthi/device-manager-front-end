@@ -4,21 +4,22 @@ import {Button} from "@mui/material";
 import Swal from 'sweetalert2';
 import axios from '../../services/axiosConfig'
 import AddIcon from '@mui/icons-material/Add';
+import OrganizationForm from "./OrganizationForm";
 
 
 const OrganizationPage = () => {
-    const [isLocationFormOpen, setIsLocationFormOpen] = useState(false);
+    const [isOrganizationFormOpen, setIsOrganizationFormOpen] = useState(false);
     const [isLocationDeviceOpen, setIsDeviceFormOpen] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState(null); // [1
     const [devices, setDevices] = useState([]);
     const [locations, setLocations] = useState([]);
 
-    const handleLocationFormOpen = () => {
-        setIsLocationFormOpen(true);
+    const handleOrganizationFormOpen = () => {
+        setIsOrganizationFormOpen(true);
     };
 
-    const handleLocationFormClose = () => {
-        setIsLocationFormOpen(false);
+    const handleOrganizationFormClose = () => {
+        setIsOrganizationFormOpen(false);
     };
 
     const handleDeviceFormOpen = (locationId) => {
@@ -29,16 +30,17 @@ const OrganizationPage = () => {
     const handleDeviceFormClose = () => {
         setIsDeviceFormOpen(false);
     };
-    const handleLocationFormSubmit = (values) => {
+    const handleOrganizationFormSubmit = (values) => {
         // Handle form submission logic here
-        const locationData = {
-            serial_number: values.serialNumber,
-            name: values.name,
-            ip_address: values.ipAddress,
-            devices: values.devices,
-        }
+        // console.log(values);
+        // const locationData = {
+        //     serial_number: values.serialNumber,
+        //     name: values.name,
+        //     ip_address: values.ipAddress,
+        //     devices: values.devices,
+        // }
 
-        axios.post('/locations', locationData)
+        axios.post('/organizations', values)
             .then(response => {
                 setLocations(response.data.data);
                 Swal.fire({
@@ -126,16 +128,16 @@ const OrganizationPage = () => {
         <div>
             <PageHeader title="Organization"/>
             <div style={{display:"flex",justifyContent:'flex-end',margin:'30px'}}>
-                <Button variant="contained" color="primary" onClick={handleLocationFormOpen} endIcon={<AddIcon/>}>
+                <Button variant="contained" color="primary" onClick={handleOrganizationFormOpen} endIcon={<AddIcon/>}>
                     Open Organization Form
                 </Button>
             </div>
-            {/*<LocationForm*/}
-            {/*    open={isLocationFormOpen}*/}
-            {/*    devices={devices}*/}
-            {/*    onClose={handleLocationFormClose}*/}
-            {/*    onSubmit={handleLocationFormSubmit}*/}
-            {/*/>*/}
+            <OrganizationForm
+                open={isOrganizationFormOpen}
+                locations={locations}
+                onClose={handleOrganizationFormClose}
+                onSubmit={handleOrganizationFormSubmit}
+            />
             {/*<div>*/}
             {/*    <LocationTable*/}
             {/*        locations={locations}*/}
