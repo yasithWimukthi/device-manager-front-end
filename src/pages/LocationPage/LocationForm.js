@@ -15,9 +15,9 @@ import {
 } from '@mui/material';
 
 const validationSchema = Yup.object({
-    serialNumber: Yup.string().required('Required'),
-    name: Yup.string().required('Required'),
-    ipAddress: Yup.string().required('Required').matches(
+    serialNumber: Yup.string().required('Unique serial number is required.'),
+    name: Yup.string().required('Name is required.'),
+    ipAddress: Yup.string().required('IP address is required.').matches(
         /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/,
         'Invalid IPv4 address'
     ),
@@ -34,7 +34,7 @@ const LocationForm = ({ open, devices, onClose, onSubmit }) => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            onSubmit(values);
+            onSubmit(values,formik);
             onClose();
         },
     });

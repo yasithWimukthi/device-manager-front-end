@@ -32,7 +32,7 @@ const LocationPage = () => {
     const handleDeviceFormClose = () => {
         setIsDeviceFormOpen(false);
     };
-    const handleLocationFormSubmit = (values) => {
+    const handleLocationFormSubmit = (values,formik) => {
         // Handle form submission logic here
         const locationData = {
             serial_number: values.serialNumber,
@@ -50,13 +50,13 @@ const LocationPage = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                formik.resetForm();
             })
             .catch(error => {
-                console.log(error);
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: "Something went wrong!",
+                    text: error.response.data.message,
                 });
             });
     };
@@ -94,7 +94,6 @@ const LocationPage = () => {
                     });
             })
             .catch(error => {
-                console.log(error);
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
@@ -117,7 +116,11 @@ const LocationPage = () => {
                         setLocations(response.data.data);
                     })
                     .catch(error => {
-                        console.log(error);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                        });
                     });
             } else if (result.isDenied) {
                 Swal.fire("Changes are not saved", "", "info");
