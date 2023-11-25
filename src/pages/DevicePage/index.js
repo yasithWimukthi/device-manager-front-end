@@ -51,7 +51,7 @@ const DevicePage = () => {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "Something went wrong!",
+                        text: error.response.data.data
                     });
                 });
         },
@@ -94,7 +94,7 @@ const DevicePage = () => {
                         </Select>
                     </FormControl>
 
-                    <p className="image-error">{formik.errors.type ? formik.errors.type : null}</p>
+                    <p className="image-error">{formik.touched.type && Boolean(formik.errors.type) ? formik.errors.type : null}</p>
 
                     <TextField
                         fullWidth
@@ -125,7 +125,7 @@ const DevicePage = () => {
                         </Select>
                     </FormControl>
 
-                    <p className="image-error">{formik.errors.status ? formik.errors.status : null}</p>
+                    <p className="image-error">{formik.touched.status && Boolean(formik.errors.status) ? formik.errors.status : null}</p>
 
                     <label htmlFor="image">
                         <Button variant="outlined" component="span" style={{marginTop: '15px'}}>
@@ -133,7 +133,7 @@ const DevicePage = () => {
                         </Button>
                     </label>
 
-                    <p className="image-error">{formik.errors.image ? formik.errors.image : null}</p>
+                    <p className="image-error">{formik.touched.image && Boolean(formik.errors.image) ? formik.errors.image : null}</p>
 
                     <Input
                         fullWidth
