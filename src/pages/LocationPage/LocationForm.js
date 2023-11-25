@@ -105,6 +105,7 @@ const LocationForm = ({ open, devices, onClose, onSubmit }) => {
                             ))}
                         </Select>
                     </FormControl>
+                    <p className="image-error">{formik.touched.devices && Boolean(formik.errors.devices) ? formik.errors.devices : null}</p>
 
                     <Box mt={2}>
                         <Button variant="contained" color="primary" type="submit">
