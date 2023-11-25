@@ -15,8 +15,8 @@ import {
 } from '@mui/material';
 
 const validationSchema = Yup.object({
-    code: Yup.string().required('Required'),
-    name: Yup.string().required('Required'),
+    code: Yup.string().required('Unique code is required.'),
+    name: Yup.string().required('Name is required.'),
     locations: Yup.array().required('At least one location is required').min(1, 'At least one location is required').max(5, 'Maximum 5 location allowed'),
 });
 
@@ -29,7 +29,7 @@ const OrganizationForm = ({ open, locations, onClose, onSubmit }) => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            onSubmit(values);
+            onSubmit(values,formik);
             onClose();
         },
     });
@@ -88,6 +88,8 @@ const OrganizationForm = ({ open, locations, onClose, onSubmit }) => {
                             ))}
                         </Select>
                     </FormControl>
+
+                    <p className="image-error">{formik.touched.locations && Boolean(formik.errors.locations) ? formik.errors.locations : null}</p>
 
                     <Box mt={2}>
                         <Button variant="contained" color="primary" type="submit">
