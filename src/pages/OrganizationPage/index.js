@@ -130,12 +130,6 @@ const OrganizationPage = () => {
                     handleDeviceFormOpen={handleDeviceFormOpen}
                 />
             </div>
-            {/*<DeviceForm*/}
-            {/*    open={isLocationDeviceOpen}*/}
-            {/*    devices={devices}*/}
-            {/*    onClose={handleDeviceFormClose}*/}
-            {/*    onSubmit={handleAddDevice}*/}
-            {/*/>*/}
         </div>
     )
 }
