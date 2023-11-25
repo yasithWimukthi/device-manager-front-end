@@ -1,6 +1,6 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material';
+import Chip from '@mui/material/Chip';
 
 const OrganizationTable = ({organizations, onAddDevice, onRemoveDevice, handleDeviceFormOpen}) => {
     return (
@@ -10,7 +10,7 @@ const OrganizationTable = ({organizations, onAddDevice, onRemoveDevice, handleDe
                     <TableRow>
                         <TableCell>Organization Code</TableCell>
                         <TableCell>Organization Name</TableCell>
-                        <TableCell>Locations</TableCell>
+                        <TableCell>Locations and Devices</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -22,15 +22,13 @@ const OrganizationTable = ({organizations, onAddDevice, onRemoveDevice, handleDe
                                 <ul>
                                     {organization.locations.map((location) => (
                                         <li key={location.id}>
-                                            {location.name} (Serial Number: {location.serial_number})
+                                            {location.name}
                                             {location.devices.length > 0 && (
-                                                <ul>
+                                                <div>
                                                     {location.devices.map((device) => (
-                                                        <li key={device.id}>
-                                                            Device Number: {device.number}, Type: {device.type}
-                                                        </li>
+                                                         <Chip key={device.id} label={device.number}/>
                                                     ))}
-                                                </ul>
+                                                </div>
                                             )}
                                         </li>
                                     ))}
