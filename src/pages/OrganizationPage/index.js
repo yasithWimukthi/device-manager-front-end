@@ -12,7 +12,7 @@ const OrganizationPage = () => {
     const [isOrganizationFormOpen, setIsOrganizationFormOpen] = useState(false);
     const [isLocationDeviceOpen, setIsDeviceFormOpen] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState(null); // [1
-    const [devices, setDevices] = useState([]);
+    const [locations, setLocations] = useState([]);
     const [organizations, setOrganizations] = useState([]);
 
     const handleOrganizationFormOpen = () => {
@@ -31,23 +31,24 @@ const OrganizationPage = () => {
     const handleDeviceFormClose = () => {
         setIsDeviceFormOpen(false);
     };
-    const handleOrganizationFormSubmit = (values) => {
+    const handleOrganizationFormSubmit = (values,formik) => {
         axios.post('/organizations', values)
             .then(response => {
-                // setLocations(response.data.data);
+                setOrganizations(response.data.data);
                 Swal.fire({
                     icon: "success",
                     title: "Organization added successfully",
                     showConfirmButton: false,
                     timer: 1500
                 });
+                formik.resetForm();
             })
             .catch(error => {
                 console.log(error);
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: "Something went wrong!",
+                    text: error.response.data.data,
                 });
             });
     };
@@ -56,8 +57,16 @@ const OrganizationPage = () => {
         // fetch all organizations here
         axios.get('/organizations')
             .then(response => {
-                console.log(response.data.data);
                 setOrganizations(response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+        // fetch all locations here
+        axios.get('/locations')
+            .then(response => {
+                setLocations(response.data.data);
             })
             .catch(error => {
                 console.log(error);
@@ -77,7 +86,6 @@ const OrganizationPage = () => {
                 });
             })
             .catch(error => {
-                console.log(error);
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
@@ -100,7 +108,11 @@ const OrganizationPage = () => {
                         setOrganizations(response.data.data);
                     })
                     .catch(error => {
-                        console.log(error);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                        });
                     });
             } else if (result.isDenied) {
                 Swal.fire("Changes are not saved", "", "info");
@@ -118,7 +130,7 @@ const OrganizationPage = () => {
             </div>
             <OrganizationForm
                 open={isOrganizationFormOpen}
-                locations={organizations}
+                locations={locations}
                 onClose={handleOrganizationFormClose}
                 onSubmit={handleOrganizationFormSubmit}
             />
